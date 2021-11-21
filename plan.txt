@@ -1,0 +1,83 @@
+Making tic-tac-toe using c++
+
+This game will run entirely using a terminal inteface.
+
+STAGE 1: DISPLAYING THE GRID
+o | o | x
+---------
+x | x | o
+---------
+o | x | o
+
+The above is a rough blueprint of the game board, as it will be shown to the player.
+The game board will be stored as a 9 character string, these values can be input into a function that will use 5 'cout' calls to display the grid.
+
+Because strings are iterable, the string can made up of 9 ones and zeros. This means that the string can be created by simply articulating the user input.
+
+STAGE 2: TAKING TURNS
+
+The game will be local two player, which is to say that two players will use the same machine to play the game.
+
+The biggest problem to solve is how to take an input.
+Moves will be made using a basic coordinate system. We will ask the user to enter coordinates, like so:
+3 1 (this means that the x or o will be placed in the top right corner)
+
+HANDLING EDGE CASES:
+
+What am i doing?
+	1. detect when an input is either too high, too low or has a non-digit in it.
+
+Ill first detect whether an input has a letter in it. This is because trying to convert an input with a letter in it to a number will rturn a error.
+
+If a character is detected in the input, then the input won't be checked for numbers and the user will be asked to try again.
+
+Flow chart:
+1. Take input
+2. Check for non-digits
+	String has letters:
+	3. Restart loop
+	String doesn't have letters:
+	3. Check if the number is too high or low
+		Number is too high, or low:
+		4. Restart loop
+		Number is not too high, or low:
+		4. Exit loop and return the users move
+
+What to do now:
+	1. Improve UX for turn loop - Tell user why their input is invalid + stop user being able to enter cells that are already full.
+	2. End game when a player gets 3 in a row (DONE)
+	3. End game after nine turns (DONE)
+
+CHECKING FOR A WINNER               (DONE)
+There are 9 positions on a tic-tac-toe board
+- Each corner space has 3 possible ways to win
+- Each middle edge spave has 2 ways to win
+- The middle space has 4 ways to win
+
+Key:
+- c = Corner Square[s]
+- me = Middle Edge Square[s]
+- m = Middle Square[s]
+- p = permutation[s] (possible ways to win)
+
+4c * 3p = 12p
+4me * 2p = 8p
+m * 4p = 4p
+12p + 8p + 4p = 24p
+
+There are 24 different ways to win a game of tic-tac-toe.
+
+How to check for these wins (Done inside a function):
+INFO: The function will return an integer between -1 and 1. If the returned value is equal to -1 then noone has won yet. The 2 other possibe values correspond to which player has won.
+1. Check the centre square first, as it is most commonly involved in wins.
+	- If the centre square has a 'sign' in it. Check cells: 1, 2, 3, and 4 for the same 'signs'. If any one of these squares has the right 'sign' in it, check the opposite cell for the correct 'sign'. If an opposite cell has the right 'sign' in it, it means that the player with that sign has won the game. Return 1 / 2
+	- Else: Return -1
+2. Check the corner squares next, as it is the second most commonly involved.
+	- If a corner cell has a 'sign' in it, check the three adjacent cells for the same 'sign'. If one of these cells has the same 'sign' in it, check the following cell for the same 'sign'. If this last cell has the same 'sign' in it, Return either 1 or 2.
+	- Else: return -1
+
+
+Possible improvements:
+1. Don't check the me cells at all because all me wins are covered by checking the middle and corner cells. (DONE)
+2. Only check 2 opposite corner cells, this is because checking all of the orner cells overlaps each other and the middle square check covers the diagonals (DONE)
+3. Don't check diagonals when checking for corner square wins, as these wins are covered by checking the middle square. (DONE)
