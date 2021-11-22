@@ -1,3 +1,10 @@
 #!/bin/bash
 
-g++ "main.cpp" -o "build.exe"
+if [[ ! -d "build" ]]
+then
+    mkdir build
+fi
+
+cd build
+g++ "../main.cpp" -o "build.exe"
+cd ..
